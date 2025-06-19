@@ -21,7 +21,7 @@ export const getContactsController = async (req, res) => {
     sortOrder,
     filter,
   });
-  if (!contacts) {
+  if (contacts.data.length === 0) {
     throw createHttpError(404, 'Contacts not found');
   }
   res.status(200).json({
