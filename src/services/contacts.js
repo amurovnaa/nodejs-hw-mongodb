@@ -1,3 +1,4 @@
+<<<<<<< hw5-auth
 import createHttpError from 'http-errors';
 import { SORT_ORDER } from '../constants/index.js';
 import { Contacts } from '../db/models/contacts.js';
@@ -42,12 +43,23 @@ export const getContacts = async ({
 };
 export const getContactById = async (contactId, userId) => {
   const contact = await Contacts.findOne({ _id: contactId, userId });
+=======
+import { Contacts } from '../db/models/contacts.js';
+
+export const getContacts = async () => {
+  const contacts = await Contacts.find();
+  return contacts;
+};
+export const getContactById = async (contactId) => {
+  const contact = await Contacts.findById(contactId);
+>>>>>>> main
   return contact;
 };
 export const postContact = async (payload) => {
   const contact = await Contacts.create(payload);
   return contact;
 };
+<<<<<<< hw5-auth
 export const updateContact = async (
   contactId,
   payload,
@@ -56,6 +68,11 @@ export const updateContact = async (
 ) => {
   const rawResult = await Contacts.findOneAndUpdate(
     { _id: contactId, userId },
+=======
+export const updateContact = async (contactId, payload, options = {}) => {
+  const rawResult = await Contacts.findOneAndUpdate(
+    { _id: contactId },
+>>>>>>> main
     payload,
     {
       new: true,
@@ -71,7 +88,12 @@ export const updateContact = async (
     isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };
+<<<<<<< hw5-auth
 export const deleteContact = async (contactId, userId) => {
   const contact = await Contacts.findOneAndDelete({ _id: contactId, userId });
+=======
+export const deleteContact = async (contactId) => {
+  const contact = await Contacts.findOneAndDelete({ _id: contactId });
+>>>>>>> main
   return contact;
 };
