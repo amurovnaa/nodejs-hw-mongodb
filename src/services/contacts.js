@@ -1,3 +1,8 @@
+<<<<<<< hw5-auth
+import createHttpError from 'http-errors';
+import { SORT_ORDER } from '../constants/index.js';
+=======
+<<<<<<< hw5-auth
 import createHttpError from 'http-errors';
 import { SORT_ORDER } from '../constants/index.js';
 import { Contacts } from '../db/models/contacts.js';
@@ -42,20 +47,84 @@ export const getContacts = async ({
 };
 export const getContactById = async (contactId, userId) => {
   const contact = await Contacts.findOne({ _id: contactId, userId });
+=======
+>>>>>>> main
+import { Contacts } from '../db/models/contacts.js';
+import { calculatePaginationData } from '../utils/calculatePaginationData.js';
+
+export const getContacts = async ({
+  page = 1,
+  perPage = 10,
+  sortOrder = SORT_ORDER.ASC,
+  sortBy = '_id',
+  filter = {},
+  userId,
+}) => {
+  const limit = perPage;
+  const skip = (page - 1) * perPage;
+
+  const contactsQuery = Contacts.find({ userId });
+  if (filter.contactType) {
+    contactsQuery.where('contactType').equals(filter.contactType);
+  }
+
+  if (typeof filter.isFavourite === 'boolean') {
+    contactsQuery.where('isFavourite').equals(filter.isFavourite);
+  }
+
+  const [contactsCount, contacts] = await Promise.all([
+    Contacts.find({ userId }).merge(contactsQuery).countDocuments(),
+    contactsQuery
+      .skip(skip)
+      .limit(limit)
+      .sort({ [sortBy]: sortOrder })
+      .exec(),
+  ]);
+  const paginationData = calculatePaginationData(contactsCount, perPage, page);
+  if (!contacts) {
+    throw createHttpError(404, 'Contacts not found');
+  }
+  return {
+    data: contacts,
+    ...paginationData,
+  };
+};
+<<<<<<< hw5-auth
+export const getContactById = async (contactId, userId) => {
+  const contact = await Contacts.findOne({ _id: contactId, userId });
+=======
+export const getContactById = async (contactId) => {
+  const contact = await Contacts.findById(contactId);
+>>>>>>> main
+>>>>>>> main
   return contact;
 };
 export const postContact = async (payload) => {
   const contact = await Contacts.create(payload);
   return contact;
 };
+<<<<<<< hw5-auth
+=======
+<<<<<<< hw5-auth
+>>>>>>> main
 export const updateContact = async (
   contactId,
   payload,
   userId,
   options = {},
 ) => {
+<<<<<<< hw5-auth
   const rawResult = await Contacts.findOneAndUpdate(
     { _id: contactId, userId },
+=======
+  const rawResult = await Contacts.findOneAndUpdate(
+    { _id: contactId, userId },
+=======
+export const updateContact = async (contactId, payload, options = {}) => {
+  const rawResult = await Contacts.findOneAndUpdate(
+    { _id: contactId },
+>>>>>>> main
+>>>>>>> main
     payload,
     {
       new: true,
@@ -71,7 +140,17 @@ export const updateContact = async (
     isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };
+<<<<<<< hw5-auth
 export const deleteContact = async (contactId, userId) => {
   const contact = await Contacts.findOneAndDelete({ _id: contactId, userId });
+=======
+<<<<<<< hw5-auth
+export const deleteContact = async (contactId, userId) => {
+  const contact = await Contacts.findOneAndDelete({ _id: contactId, userId });
+=======
+export const deleteContact = async (contactId) => {
+  const contact = await Contacts.findOneAndDelete({ _id: contactId });
+>>>>>>> main
+>>>>>>> main
   return contact;
 };
