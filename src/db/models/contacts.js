@@ -14,13 +14,10 @@ const contactsSchema = new Schema(
     email: {
       type: String,
       required: false,
-<<<<<<< hw5-auth
-=======
     },
     email: {
       type: String,
       required: false,
->>>>>>> main
     },
     isFavourite: {
       type: Boolean,
