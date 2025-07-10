@@ -64,7 +64,7 @@
               "type": "string",
               "example": "name"
             },
-            "description": "Field to sort by (name, createdAt)"
+            "description": "Field to sort by (name)"
           },
           {
             "in": "query",
