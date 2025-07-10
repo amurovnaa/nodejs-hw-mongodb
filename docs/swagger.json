@@ -81,30 +81,6 @@
           },
           {
             "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter contacts by name"
-          },
-          {
-            "in": "query",
-            "name": "phoneNumber",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter contacts by phone number"
-          },
-          {
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter contacts by email"
-          },
-          {
-            "in": "query",
             "name": "isFavourite",
             "schema": {
               "type": "boolean"
